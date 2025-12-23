@@ -1,8 +1,19 @@
 <!DOCTYPE>
 <html>
     <div>
-        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'index' %}">Home</a> -
+        
+        {% if user.is_authenticated %}
+            <a href="{% url 'logout_view' %}">Log out</a> -
+            <p>Hello, {{ user.username }}</p>
+
+        {% else %}
+            <a href="{% url 'login_view' %}">Log in</a>
+        {% endif %}
+        
     </div>
+
+
     {% block content %}
     {% endblock %}
 </html>
