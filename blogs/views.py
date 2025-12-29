@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
 from .models import BlogPost
@@ -12,6 +13,8 @@ def index(request):
     context = {'posts':posts}
     return render(request, 'blogs/index.html', context)
 
+
+@login_required
 def add_post(request):
     """ This view will display form for new post """
 
@@ -22,17 +25,23 @@ def add_post(request):
         # POST data submitted; process data
         form = PostForm(request.POST)
         if form.is_valid():
-            form.save()
+            new_post = form.save(commit=False)
+            new_post.owner = request.user
+            new_post.save()
             return HttpResponseRedirect(reverse('index'))
     
     context = {'form':form}
-    return render(request, 'blogs/new_post.html', context)
+    return render(request, 'blogs/add_post.html', context)
 
+
+@login_required
 def edit_post(request, post_id):
     """ This view edits an existing post """
 
     post = get_object_or_404(BlogPost, pk=post_id)
-
+    if post.owner != request.user:
+        raise Http404
+    
     if request.method != 'POST':
         # Initial request; populate fields
         form = PostForm(instance=post)
