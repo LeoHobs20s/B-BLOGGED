@@ -22,7 +22,9 @@
             <p>{{ post.text|linebreaks }}</p>
         </div>
         <div>
-            <a href="{% url 'edit_post' post.id %}" method="post">Edit Post</a>
+            {% if post.owner == user %}
+                <a href="{% url 'edit_post' post.id %}" method="post">Edit Post</a>
+            {% endif %}
         </div>
         {% empty %}
         <div>
