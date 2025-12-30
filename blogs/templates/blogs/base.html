@@ -4,14 +4,20 @@
         <a href="{% url 'index' %}">Home</a> -
 
         {% if user.is_authenticated %}
-            <a href="{% url 'logout_view' %}">Log out</a> -
-            <span>Hello, {{ user.username }}</span>
-
+            <a href="{% url 'logout_view' %}">Log out</a>
         {% else %}
             <a href="{% url 'login_view' %}">Log in</a> -
             <a href="{% url 'register' %}">Register</a>
         {% endif %}
         
+    </div>
+
+    <div>
+        {% if messages %}
+            {% for message in messages %}
+                <p class="alert-text:{{messages.tags}}" > {{message}}</p>
+            {%endfor%}
+        {% endif %}
     </div>
 
 

@@ -20,7 +20,7 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                messages.success(request, 'Welcome')
+                messages.success(request, f'Welcome, {username.title()}')
                 return redirect('index')
             else:
                 messages.error(request, 'Invalid credentials')
