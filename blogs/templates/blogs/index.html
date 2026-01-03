@@ -11,7 +11,7 @@
     </div>
 
     <div>
-        <a href="{% url 'add_post' %}">Add New Post</a>
+        <a href="{% url 'add_post' %}" class="btn btn-outline-primary">Add New Post</a>
     </div>
 
     <div>
@@ -20,10 +20,13 @@
             <p>{{ post.date_added|date:'M-d-Y, H:i' }}</p>
             <p>{{ post.title|linebreaks }}</p>
             <p>{{ post.text|linebreaks }}</p>
+
         </div>
         <div>
             {% if post.owner == user %}
-                <a href="{% url 'edit_post' post.id %}" method="post">Edit Post</a>
+                <button type="button" class="btn btn-light">
+                    <a href="{% url 'edit_post' post.id %}" method="post">Edit Post</a>
+                </button>
             {% endif %}
         </div>
         {% empty %}

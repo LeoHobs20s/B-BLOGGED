@@ -5,8 +5,7 @@
     <form action="{% url 'login_view' %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Log in</button>
-        <input type="hidden" name="next" value="{% url 'index' %}" />
+        <button type="submit" class="btn btn-outline-warning">Log in</button>
     </form>
 
 {% endblock %}
