@@ -2,25 +2,31 @@
 
 {% block content %}
 
-    <div>
-        <h1>Blog Home</h1>
+    <div class="container-fluid text-center pt-4">
+       <span class="display-3 text-light">BLOG HOME</span>
     </div>
 
-    <div>
-        <h2>Posts:</h2>
+    <div class="container w-29 m-1 mt-4 mb-4">
+        <span class="display-5 text-light">
+            Blog Feed
+        </span>
     </div>
 
-    <div>
-        <a href="{% url 'add_post' %}" class="btn btn-outline-primary">Add New Post</a>
+    <div class="container m-0">
+        <a href="{% url 'add_post' %}" class="btn btn-primary">Add New Post</a>
     </div>
 
-    <div>
+    <div class="container mt-3">
         {% for post in posts %}
-        <div>
-            <p>{{ post.date_added|date:'M-d-Y, H:i' }}</p>
-            <p>{{ post.title|linebreaks }}</p>
-            <p>{{ post.text|linebreaks }}</p>
-
+        <div class="container text-bg-dark rounded">
+            
+            <div>
+                <span class="display-6">{{ post.title|linebreaks }}</span>
+                <p>{{ post.text }}</p>
+            </div>
+            <div>
+                <p>{{ post.date_added|date:'M-d-Y, H:i' }}</p>
+            </div>
         </div>
         <div>
             {% if post.owner == user %}

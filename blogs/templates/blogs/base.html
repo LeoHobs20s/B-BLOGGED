@@ -1,4 +1,4 @@
-{% load static %}
+<!-- {% load static %} -->
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -11,29 +11,38 @@
         {% block head %}{% endblock %}
     </head>
 
-    <body>
+    <body class="bg-dark">
 
-        <div>
-            <ul class="nav nav-pill">
-                <li class="nav-item">
-                    <a href="{% url 'index' %}" class="nav-link my-5 text-bg-success">Home</a> -
-                </li>
+        <nav class="navbar navbar-expand-lg bg-primary navbar-dark">
+            <div class="container-fluid">
+                <a href="{% url 'index' %}" class="navbar-brand">B-BLOGGED</a>
 
-            {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a href="{% url 'logout_view' %}" class="nav-link my-5 text-bg-success">Log out</a>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a href="{% url 'login_view' %}" class="nav-link my-5 text-bg-success">Log in</a> -
-                </li>
-                <l class="nav-item">
-                    <a href="{% url 'register' %}" class="nav-link my-5 text-bg-success">Register</a>
-                </l>
-            {% endif %}
-            </ul>
-            
-        </div>
+                <button class="navbar-toggler bg-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNav">
+                    <span class="navbar-toggler-icon"></span>
+
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-end" id="collapseNav">
+
+                    <ul class="navbar-nav">
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a href="{% url 'logout_view' %}" class="nav-link">Log out</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a href="{% url 'login_view' %}" class="nav-link text-light">Log in</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{% url 'register' %}" class="nav-link text-light">Register</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+
+                </div>
+                
+            </div>
+        </nav>
 
         <div>
             {% if messages %}
