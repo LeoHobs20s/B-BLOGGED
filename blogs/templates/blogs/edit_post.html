@@ -3,14 +3,20 @@
 {% block content %}
 
     <div>
-        <h2>Edit post: </h2>
+        <span class="display-5">Edit post:</span>
     </div>
 
     <div>
         <form action="{% url 'edit_post' post.id %}" method="post">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Save Changes</button>
+            {% for field in form %}
+                <div class="container mt-3">
+                    {{ field }}
+                </div>
+            {% endfor %}
+            <div class="container d-flex mt-3">
+                <button type="submit" class="btn btn-primary mx-auto w-50">Save Changes</button>
+            </div>
         </form>
     </div>
 

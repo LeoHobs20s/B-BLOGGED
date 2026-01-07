@@ -9,5 +9,20 @@ class PostForm(forms.ModelForm):
 
         model = BlogPost
         fields = ['title', 'text']
-        labels = {'title':'Enter title', 'text':'Type Post'}
-        widget = {'text':forms.Textarea({'cols':70})}
+        labels = {'title':'', 'text':''}
+        widgets = {
+            'title':forms.TextInput(attrs={
+                'placeholder':'Enter Title ...'
+            }),
+            'text':forms.Textarea(attrs={
+                'cols':90,
+                'placeholder':'Enter Post ...',
+            })
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(PostForm, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control text-bg-light'
+
+

@@ -16,9 +16,9 @@
         <a href="{% url 'add_post' %}" class="btn btn-primary">Add New Post</a>
     </div>
 
-    <div class="container mt-3">
+    <div class="container mt-4">
         {% for post in posts %}
-        <div class="container text-bg-dark rounded">
+        <div class="container text-bg-dark rounded border-bottom border-top border-5-light mb-5 pt-3">
             
             <div>
                 <span class="display-6">{{ post.title|linebreaks }}</span>
@@ -26,18 +26,20 @@
             </div>
             <div>
                 <p>{{ post.date_added|date:'M-d-Y, H:i' }}</p>
+
+                <p>By: {{ post.owner }} </p>
+            </div>
+
+            <div class="container mb-4">
+                {% if post.owner == user %}
+                    <a href="{% url 'edit_post' post.id %}" method="post" class="btn btn-warning">Edit Post</a>
+                {% endif %}
             </div>
         </div>
-        <div>
-            {% if post.owner == user %}
-                <button type="button" class="btn btn-light">
-                    <a href="{% url 'edit_post' post.id %}" method="post">Edit Post</a>
-                </button>
-            {% endif %}
-        </div>
+        
         {% empty %}
         <div>
-            <p>No posts available.</p>
+            <p>No Blog posts available.</p>
         </div>
         {% endfor %}
     </div>

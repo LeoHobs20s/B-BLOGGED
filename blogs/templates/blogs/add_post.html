@@ -3,14 +3,22 @@
 {% block content %}
 
     <div>
-        <h2>Enter New Post: </h2>
+        <span class="display-5">
+            Enter New Post
+        </span>
     </div>
 
     <div>
         <form action="{% url 'add_post' %}" method="post">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-outline-primary">Post</button>
+            {% for field in form %}
+                <div class="container mt-4">
+                    {{ field }}
+                </div>
+            {% endfor %}
+            <div class="container mt-2 d-flex mx-auto">
+                <button type="submit" class="btn btn-primary w-50 mx-auto">Post</button>
+            </div>
         </form>
     </div>
 

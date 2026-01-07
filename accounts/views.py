@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import LoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.contrib.auth.forms import UserCreationForm
+from .forms import RegistrationForm
 
 
 def login_view(request):
@@ -40,10 +40,10 @@ def register(request):
 
     if request.method != 'POST':
         # No Data Submitted; create blank form
-        form = UserCreationForm()
+        form = RegistrationForm()
     else:
         # POST Data Submitted; process data
-        form = UserCreationForm(data=request.POST)
+        form = RegistrationForm(data=request.POST)
         if form.is_valid():
             new_user = form.save()
             user = authenticate(username=new_user.username, password=request.POST['password1'])

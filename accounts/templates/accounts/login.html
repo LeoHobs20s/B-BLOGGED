@@ -2,10 +2,22 @@
 
 {% block content %}
 
-    <form action="{% url 'login_view' %}" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-outline-warning">Log in</button>
-    </form>
+    <div class="container d-flex mt-4 text-bg-dark w-50 rounded border-top border-bottom border-light pb-4 pt-4">
+        <form action="{% url 'login_view' %}" method="post" class="mx-auto card shadow-lg pb-2">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="container mt-2">
+                    {{ field.label_tag }}
+                </div>
+                <div class="container mt-1">
+                    {{ field }}
+                </div>
+            {% endfor %}
+
+            <div class="container">
+                <button type="submit" class="btn container-fluid btn-warning mt-3">Log in</button>
+            </div>
+        </form>
+    </div>
 
 {% endblock %}
