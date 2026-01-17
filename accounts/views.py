@@ -3,30 +3,27 @@ from .forms import LoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import RegistrationForm
+from django.views import View
 
 
-def login_view(request):
-    """ Logging in user """
+class LoginView(View):
+    form_class = LoginForm
+    template_name = 'accounts/login.html'
 
-    if request.method != 'POST':
-        # No Data Submitted; create blank form
-        form = LoginForm()
-    else:
-        # POST Data Submitted; process credentials
-        form = LoginForm(data=request.POST)
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form':form})
+    
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                messages.success(request, f'Welcome, {username.title()}')
                 return redirect('index')
-            else:
-                messages.error(request, 'Invalid credentials')
-            
-    context  = {'form':form}
-    return render(request, 'accounts/login.html', context)
+        return render(request, self.template_name, {'form':form})
 
 
 def logout_view(request):
@@ -35,20 +32,24 @@ def logout_view(request):
     return redirect('login_view')
 
 
-def register(request):
-    """ Registering users """
+class RegistrationView(View):
+    form_class = RegistrationForm
+    template_name = 'accounts/register.html'
 
-    if request.method != 'POST':
-        # No Data Submitted; create blank form
-        form = RegistrationForm()
-    else:
-        # POST Data Submitted; process data
-        form = RegistrationForm(data=request.POST)
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form':form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
         if form.is_valid():
             new_user = form.save()
-            user = authenticate(username=new_user.username, password=request.POST['password1'])
-            login(request, user)
-            return redirect('index')
-
-    context = {'form':form}
-    return render(request, 'accounts/register.html', context)  
+            username = new_user.username
+            password = request.POST['password1']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                user.save()
+                login(request, user)
+                return redirect('index')
+        return render(request, self.template_name, {'form':form})
+      

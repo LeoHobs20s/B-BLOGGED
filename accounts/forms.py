@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 class LoginForm(forms.Form):
     """ Defining Login Form attributes """
 
-    username = forms.CharField(max_length=30,
+    username = forms.CharField(max_length=30,help_text='Characters must be atleast 30',
     widget=forms.TextInput(attrs={
         'class':'form-control', 'placeholder':'Enter username'
     }))
